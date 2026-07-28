@@ -1,0 +1,56 @@
+from fastapi import APIRouter , Depends
+
+from sqlalchemy.orm import Session 
+ 
+from app import crud , schemas
+from app.database import get_db
+
+
+router = APIRouter(
+    prefix="/tasks",
+    tags=["Tasks"]
+)
+
+
+@router.post("/", response_model=schemas.TaskResponse)
+def create_new_task(
+    task: schemas.TaskCreate,
+    db: Session = Depends(get_db)
+):
+    return crud.create_task(db, task)
+
+
+
+@router.get("/", response_model=list[schemas.TaskResponse])
+def get_new_task(
+    db: Session = Depends(get_db)):
+    return crud.get_tasks(db)
+
+@router.get("/{task_id}",response_model=schemas.TaskResponse)
+def get_task(
+    task_id: int,
+    db: Session = Depends(get_db)
+):
+    return crud.get_task(db,task_id)
+
+
+@router.put("/{task_id}", response_model=schemas.TaskResponse)
+def update_task(
+    task_id: int,
+    task: schemas.TaskUpdate,
+    db: Session = Depends(get_db)
+):
+    return crud.update_task(db, task_id, task)
+
+
+@router.delete("/{task_id}", response_model=schemas.TaskResponse)
+def delete_task(
+    task_id: int,
+    db: Session = Depends(get_db)
+):
+    return crud.delete_task(db, task_id)
+
+
+
+
+    
