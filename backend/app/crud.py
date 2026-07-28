@@ -32,6 +32,8 @@ def update_task(db: Session, task_id: int, updated_task: schemas.TaskUpdate):
 
     if task is None:
         return None
+    
+    completed: bool
 
     task.title = updated_task.title
     task.description = updated_task.description
@@ -45,3 +47,14 @@ def update_task(db: Session, task_id: int, updated_task: schemas.TaskUpdate):
     db.refresh(task)
 
     return task
+
+def delete_task(db: Session, task_id: int):
+    task = get_task(db, task_id)
+    
+    if task is None:
+     return None
+ 
+    db.delete(task)
+    db.commit()
+    
+    return task 
