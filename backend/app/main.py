@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from app.database import engine
 from app import models
+from app.routes.task import router
 
-# Automatically create tables in SQLite when app launches
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -10,6 +10,8 @@ app = FastAPI(
     version="0.1.0",
     description="AI Productivity Assistant Backend"
 )
+
+app.include_router(router)
 
 @app.get("/")
 def root():
