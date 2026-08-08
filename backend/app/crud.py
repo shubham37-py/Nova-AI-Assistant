@@ -20,8 +20,19 @@ def create_task(db: Session, task: schemas.TaskCreate):
     return new_task
 
 
-def get_tasks(db: Session):
-    return db.query(models.Task).all()
+def get_tasks(db: Session, page: int, limit: int):
+    offset = (page - 1) * limit
+
+    return (
+        db.query(models.Task)
+        .order_by(
+            models.Task.completed.asc(),
+            models.Task.id.asc()
+        )
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
     
 
 def get_task(db: Session, task_id: int):

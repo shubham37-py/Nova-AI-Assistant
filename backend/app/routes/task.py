@@ -1,4 +1,5 @@
 from fastapi import APIRouter , Depends,HTTPException
+from fastapi import Query
 
 from sqlalchemy.orm import Session 
  
@@ -27,9 +28,11 @@ def create_new_task(
 
 @router.get("/", response_model=list[schemas.TaskResponse])
 def get_new_task(
-    db: Session = Depends(get_db)):
-    
-    return crud.get_tasks(db)
+    page: int = Query(1, ge=1),
+    limit: int = Query(20, ge=1, le=100),
+    db: Session = Depends(get_db)
+):
+    return crud.get_tasks(db, page, limit)
 
 @router.get("/{task_id}", response_model=schemas.TaskResponse)
 def get_task(
