@@ -30,9 +30,12 @@ def create_new_task(
 def get_new_task(
     page: int = Query(1, ge=1),
     limit: int = Query(20, ge=1, le=100),
+    completed: bool | None = None,
     db: Session = Depends(get_db)
 ):
-    return crud.get_tasks(db, page, limit)
+    print("DEBUG completed =", completed)
+
+    return crud.get_tasks(db, page, limit, completed)
 
 @router.get("/{task_id}", response_model=schemas.TaskResponse)
 def get_task(

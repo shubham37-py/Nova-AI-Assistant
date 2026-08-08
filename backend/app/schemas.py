@@ -13,8 +13,14 @@ class TaskBase(BaseModel):
     due_time: Optional[time] = None
     
 
-class TaskCreate(TaskBase):
-    pass
+class TaskCreate(BaseModel):
+    title: str
+    description: str | None = None
+    completed: bool = False
+    priority: str
+    category: str
+    due_date: date | None = None
+    due_time: time | None = None
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = None

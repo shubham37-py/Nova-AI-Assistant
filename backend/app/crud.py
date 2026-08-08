@@ -7,6 +7,7 @@ def create_task(db: Session, task: schemas.TaskCreate):
     new_task = models.Task(
         title=task.title,
         description=task.description,
+        completed=task.completed,
         priority=task.priority,
         category=task.category,
         due_date=task.due_date,
@@ -20,11 +21,21 @@ def create_task(db: Session, task: schemas.TaskCreate):
     return new_task
 
 
-def get_tasks(db: Session, page: int, limit: int):
+def get_tasks(
+    db: Session,
+    page: int,
+    limit: int,
+    completed: bool | None = None
+):
     offset = (page - 1) * limit
 
+    query = db.query(models.Task)
+
+    if completed is not None:
+        query = query.filter(models.Task.completed == completed)
+
     return (
-        db.query(models.Task)
+        query
         .order_by(
             models.Task.completed.asc(),
             models.Task.id.asc()
