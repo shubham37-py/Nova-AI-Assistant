@@ -1,7 +1,27 @@
+import { useState } from "react";
 import useTasks from "../hooks/useTasks";
+import TaskList from "../components/TaskList";
 
 function Tasks() {
-  const { tasks, loading, error } = useTasks();
+  const [page, setPage] = useState(1);
+  const [completed, setCompleted] = useState(null);
+
+  const limit = 20;
+
+  const {
+  tasks,
+  loading,
+  error,
+  toggleTask,
+} = useTasks(page, limit, completed);
+
+  function changeFilter(value) {
+    setCompleted(value);
+    setPage(1);
+  }
+
+  const hasNextPage = tasks.length === limit;
+  const hasPreviousPage = page > 1;
 
   if (loading) {
     return (
@@ -33,6 +53,7 @@ function Tasks() {
 
   return (
     <section className="page-section">
+
       <div className="page-heading">
         <p className="eyebrow">
           NOVA // TASK SYSTEM
@@ -47,37 +68,66 @@ function Tasks() {
         </p>
       </div>
 
-      <div className="task-list">
-        {tasks.map((task) => (
-          <div className="task-card" key={task.id}>
-            <div className="task-check">
-              {task.completed ? "✓" : ""}
-            </div>
+      <div className="task-filters">
 
-            <div className="task-info">
-              <div className="task-topline">
-                <span className="task-category">
-                  {task.category}
-                </span>
+        <button
+          className={completed === null ? "filter active" : "filter"}
+          onClick={() => changeFilter(null)}
+        >
+          ALL
+        </button>
 
-                <span
-                  className={`priority ${task.priority.toLowerCase()}`}
-                >
-                  {task.priority}
-                </span>
-              </div>
+        <button
+          className={completed === false ? "filter active" : "filter"}
+          onClick={() => changeFilter(false)}
+        >
+          ACTIVE
+        </button>
 
-              <h3>{task.title}</h3>
+        <button
+          className={completed === true ? "filter active" : "filter"}
+          onClick={() => changeFilter(true)}
+        >
+          COMPLETED
+        </button>
 
-              <p>{task.description}</p>
-            </div>
-
-            <div className="task-arrow">
-              →
-            </div>
-          </div>
-        ))}
       </div>
+
+      {tasks.length === 0 ? (
+        <div className="empty-state">
+          <p>NO MISSIONS FOUND.</p>
+        </div>
+      ) : (
+        <TaskList
+  tasks={tasks}
+  onToggle={toggleTask}
+/>
+      )}
+
+      <div className="pagination">
+
+        <button
+          className="pagination-btn"
+          disabled={!hasPreviousPage}
+          onClick={() => setPage((current) => current - 1)}
+        >
+          ← PREVIOUS
+        </button>
+
+        <span>
+          PAGE {page}
+        </span>
+
+        <button
+          className="pagination-btn"
+          disabled={!hasNextPage}
+          onClick={() => setPage((current) => current + 1)}
+        >
+          NEXT →
+        </button>
+
+      </div>
+
     </section>
   );
 }

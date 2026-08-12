@@ -1,13 +1,14 @@
 import TaskCard from "./TaskCard";
 
+
 function TaskList({ tasks, onToggle }) {
   return (
     <div className="task-list">
-      {tasks.map((task, index) => (
+      {tasks.map((task) => (
         <TaskCard
-          key={index}
+          key={task.id}
           task={task}
-          onToggle={() => onToggle(index)}
+          onToggle={() => onToggle(task)}
         />
       ))}
     </div>

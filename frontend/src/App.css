@@ -711,3 +711,300 @@
   font-size: 14px;
   letter-spacing: 0.5px;
 }
+
+/* =========================
+   CREATE TASK PANEL
+========================= */
+
+.task-panel-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 100;
+
+  display: flex;
+  justify-content: flex-end;
+
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.task-panel {
+  position: relative;
+
+  width: min(500px, 90vw);
+  height: 100vh;
+
+  padding: 55px 40px;
+
+  overflow-y: auto;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 42, 0, 0.08),
+      transparent 35%
+    ),
+    #090909;
+
+  border-left: 1px solid rgba(255, 42, 0, 0.3);
+
+  box-shadow:
+    -20px 0 60px rgba(255, 42, 0, 0.12);
+
+  animation: panelSlideIn 0.3s ease-out;
+}
+
+.panel-close {
+  position: absolute;
+
+  top: 24px;
+  right: 28px;
+
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: transparent;
+
+  color: #777;
+
+  font-size: 24px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.panel-close:hover {
+  color: white;
+
+  border-color: var(--nova-red);
+
+  background: rgba(255, 42, 0, 0.1);
+}
+
+.create-task-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.create-task-form h2 {
+  margin: 0 0 20px;
+
+  font-size: 42px;
+  line-height: 0.95;
+  font-weight: 900;
+}
+
+.create-task-form h2 span {
+  color: var(--nova-red);
+}
+
+.create-task-form input,
+.create-task-form textarea,
+.create-task-form select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 14px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 4px;
+
+  outline: none;
+
+  background: #111;
+  color: #eee;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.create-task-form textarea {
+  min-height: 120px;
+
+  resize: vertical;
+}
+
+.create-task-form input:focus,
+.create-task-form textarea:focus,
+.create-task-form select:focus {
+  border-color: rgba(255, 42, 0, 0.7);
+
+  box-shadow:
+    0 0 18px rgba(255, 42, 0, 0.1);
+}
+
+.create-task-form input::placeholder,
+.create-task-form textarea::placeholder {
+  color: #555;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row > * {
+  flex: 1;
+}
+
+.form-error {
+  margin: 0;
+
+  color: var(--nova-red);
+
+  font-size: 12px;
+}
+
+.create-task-form .primary-btn {
+  align-self: flex-start;
+}
+
+.create-task-form .primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes panelSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   TASK FILTERS
+========================= */
+
+.task-filters {
+  display: flex;
+  gap: 8px;
+
+  margin: 40px 0 24px;
+}
+
+.filter {
+  padding: 9px 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+
+  background: transparent;
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.filter:hover,
+.filter.active {
+  color: white;
+
+  border-color: rgba(255, 42, 0, 0.5);
+
+  background: rgba(255, 42, 0, 0.1);
+}
+
+.filter.active {
+  color: var(--nova-orange);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+  max-width: 1000px;
+
+  padding: 60px 20px;
+
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+
+  text-align: center;
+
+  color: #555;
+
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  max-width: 1000px;
+
+  margin-top: 35px;
+
+  color: #777;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.pagination-btn {
+  padding: 10px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+
+  background: transparent;
+  color: #aaa;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  color: white;
+
+  border-color: rgba(255, 42, 0, 0.5);
+
+  background: rgba(255, 42, 0, 0.08);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
