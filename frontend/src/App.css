@@ -1,0 +1,713 @@
+:root {
+  --nova-bg: #050505;
+  --nova-surface: #0c0c0c;
+  --nova-surface-2: #121212;
+
+  --nova-red: #ff2a00;
+  --nova-orange: #ff6a00;
+  --nova-ember: #ffb000;
+
+  --nova-text: #f5f5f5;
+  --nova-muted: #777;
+
+  --nova-border: rgba(255, 70, 20, 0.18);
+}
+
+.nova-shell {
+  min-height: 100vh;
+  display: flex;
+  background:
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 42, 0, 0.08),
+      transparent 30%
+    ),
+    var(--nova-bg);
+  color: var(--nova-text);
+}
+
+/* SIDEBAR */
+
+.nova-sidebar {
+  width: 82px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 24px 0;
+
+  background: #080808;
+  border-right: 1px solid var(--nova-border);
+}
+
+.nova-logo {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid var(--nova-red);
+  border-radius: 10px;
+
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+
+  box-shadow:
+    0 0 20px rgba(255, 42, 0, 0.25),
+    inset 0 0 12px rgba(255, 42, 0, 0.08);
+}
+
+.nova-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  margin-top: 70px;
+}
+
+.nav-item {
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #666;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: white;
+  border-color: rgba(255, 42, 0, 0.4);
+
+  background: rgba(255, 42, 0, 0.08);
+
+  box-shadow:
+    0 0 18px rgba(255, 42, 0, 0.15);
+}
+
+/* MAIN */
+
+.nova-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.nova-header {
+  height: 88px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 48px;
+
+  border-bottom: 1px solid var(--nova-border);
+}
+
+.nova-status {
+  color: var(--nova-red);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.nova-header h1 {
+  margin: 6px 0 0;
+
+  font-size: 22px;
+  letter-spacing: 3px;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #777;
+}
+
+.system-online {
+  color: var(--nova-orange);
+}
+
+/* CONTENT */
+
+.nova-content {
+  padding: 70px 8%;
+}
+
+.hero {
+  max-width: 900px;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+
+  color: var(--nova-orange);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.hero h2 {
+  margin: 0;
+
+  font-size: clamp(48px, 7vw, 100px);
+  line-height: 0.95;
+  letter-spacing: -4px;
+  font-weight: 900;
+}
+
+.hero h2 span {
+  color: var(--nova-red);
+
+  text-shadow:
+    0 0 30px rgba(255, 42, 0, 0.35),
+    0 0 80px rgba(255, 42, 0, 0.12);
+}
+
+.primary-btn {
+  margin-top: 42px;
+
+  padding: 15px 28px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: var(--nova-red);
+  color: white;
+
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 25px rgba(255, 42, 0, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 35px rgba(255, 42, 0, 0.45);
+}
+
+/* =========================
+   NOVA CORE
+========================= */
+
+.nova-core-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 380px;
+  margin-bottom: 20px;
+}
+.nova-core {
+  position: relative;
+
+  width: 360px;
+  height: 360px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+}
+
+/* Main glow */
+
+.core-glow {
+  position: absolute;
+
+  width: 190px;
+  height: 190px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 106, 0, 0.8),
+      rgba(255, 42, 0, 0.35) 35%,
+      transparent 70%
+    );
+
+  filter: blur(10px);
+
+  animation: corePulse 3s ease-in-out infinite;
+}
+
+/* Core */
+
+.core-center {
+  position: relative;
+
+  width: 130px;
+  height: 130px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #ffb000,
+      #ff4500 35%,
+      #9d1600 70%,
+      #160000
+    );
+
+  border: 2px solid rgba(255, 170, 70, 0.8);
+
+  box-shadow:
+    0 0 25px rgba(255, 42, 0, 0.8),
+    0 0 70px rgba(255, 42, 0, 0.35),
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
+
+  z-index: 3;
+}
+
+.core-center span {
+  font-size: 58px;
+  font-weight: 900;
+
+  color: white;
+
+  text-shadow:
+    0 0 15px rgba(255, 255, 255, 0.8),
+    0 0 35px rgba(255, 106, 0, 0.8);
+}
+
+/* Orbit rings */
+
+.core-orbit {
+  position: absolute;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 70, 0, 0.35);
+}
+
+.orbit-one {
+  width: 250px;
+  height: 250px;
+
+  border-top-color: var(--nova-orange);
+  border-bottom-color: transparent;
+
+  animation: orbitSpin 8s linear infinite;
+}
+
+.orbit-two {
+  width: 320px;
+  height: 320px;
+
+  border-left-color: var(--nova-red);
+  border-right-color: transparent;
+
+  animation: orbitSpinReverse 12s linear infinite;
+}
+
+/* Core status */
+
+.core-status {
+  position: absolute;
+
+  bottom: 5px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #777;
+
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.core-status span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--nova-orange);
+
+  box-shadow:
+    0 0 10px var(--nova-orange);
+}
+
+/* Animations */
+
+@keyframes corePulse {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes orbitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitSpinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard {
+  padding: 55px 7%;
+}
+
+.dashboard-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-bottom: 40px;
+}
+
+.dashboard-intro h2 {
+  margin: 0;
+
+  font-size: clamp(32px, 4vw, 58px);
+  line-height: 0.95;
+  letter-spacing: -2px;
+  font-weight: 900;
+}
+
+.dashboard-intro h2 span {
+  color: var(--nova-red);
+
+  text-shadow:
+    0 0 25px rgba(255, 42, 0, 0.25);
+}
+
+/* =========================
+   TASK LIST
+========================= */
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  max-width: 1000px;
+}
+
+/* =========================
+   TASK CARD
+========================= */
+
+.task-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 110px;
+
+  padding: 20px 24px;
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(255, 42, 0, 0.055),
+      transparent 45%
+    ),
+    var(--nova-surface);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  border-left: 3px solid var(--nova-red);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateX(6px);
+
+  border-color: rgba(255, 70, 0, 0.35);
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(255, 42, 0, 0.1),
+      transparent 50%
+    ),
+    var(--nova-surface-2);
+
+  box-shadow:
+    -10px 0 35px rgba(255, 42, 0, 0.08);
+}
+
+/* =========================
+   CHECK
+========================= */
+
+.task-check {
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  margin-right: 22px;
+
+  border: 1px solid rgba(255, 70, 0, 0.45);
+
+  color: white;
+
+  font-size: 15px;
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.task-card:hover .task-check {
+  background: rgba(255, 42, 0, 0.15);
+
+  box-shadow:
+    0 0 15px rgba(255, 42, 0, 0.2);
+}
+
+
+
+/* =========================
+   TASK INFO
+========================= */
+
+.task-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-topline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 7px;
+}
+
+.task-category {
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.priority {
+  padding: 3px 7px;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.priority.high {
+  color: var(--nova-red);
+
+  background: rgba(255, 42, 0, 0.1);
+
+  border: 1px solid rgba(255, 42, 0, 0.25);
+}
+
+.priority.medium {
+  color: var(--nova-ember);
+
+  background: rgba(255, 176, 0, 0.08);
+
+  border: 1px solid rgba(255, 176, 0, 0.2);
+}
+
+.priority.low {
+  color: #999;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.task-info h3 {
+  margin: 0;
+
+  font-size: 19px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+}
+
+.task-info p {
+  margin: 5px 0 0;
+
+  color: #666;
+
+  font-size: 12px;
+}
+
+/* =========================
+   ARROW
+========================= */
+
+.task-arrow {
+  margin-left: 30px;
+
+  color: #444;
+
+  font-size: 20px;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.task-card:hover .task-arrow {
+  color: var(--nova-orange);
+
+  transform: translateX(5px);
+}
+
+/* =========================
+   COMPLETED
+========================= */
+
+.task-card.completed {
+  opacity: 0.5;
+
+  border-left-color: #555;
+}
+
+.task-card.completed .task-check {
+  background: rgba(255, 106, 0, 0.15);
+
+  border-color: var(--nova-orange);
+}
+
+.task-card.completed h3 {
+  text-decoration: line-through;
+}
+
+.task-check {
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  margin-right: 22px;
+
+  border: 1px solid rgba(255, 70, 0, 0.45);
+
+  background: transparent;   /* remove white */
+  color: var(--nova-orange);
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+/* =========================
+   GENERIC PAGE
+========================= */
+
+.page-section {
+  min-height: calc(100vh - 88px);
+  padding: 70px 7%;
+}
+
+.page-heading {
+  max-width: 900px;
+}
+
+.page-heading h2 {
+  margin: 0;
+
+  font-size: clamp(48px, 6vw, 82px);
+  line-height: 0.95;
+  letter-spacing: -3px;
+  font-weight: 900;
+}
+
+.page-heading h2 span {
+  color: var(--nova-red);
+
+  text-shadow:
+    0 0 25px rgba(255, 42, 0, 0.3);
+}
+
+.page-description {
+  margin-top: 20px;
+
+  color: #777;
+
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
