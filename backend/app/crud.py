@@ -49,26 +49,25 @@ def get_tasks(
 def get_task(db: Session, task_id: int):
     return db.query(models.Task).filter(models.Task.id == task_id).first()
 
-def update_task(db: Session, task_id: int, updated_task: schemas.TaskUpdate):
-    task = get_task(db, task_id)
+def update_task(db: Session, task_id: int, task: schemas.TaskUpdate):
+    db_task = (
+        db.query(models.Task)
+        .filter(models.Task.id == task_id)
+        .first()
+    )
 
-    if task is None:
+    if not db_task:
         return None
-    
-    completed: bool
 
-    task.title = updated_task.title
-    task.description = updated_task.description
-    task.priority = updated_task.priority
-    task.category = updated_task.category
-    task.due_date = updated_task.due_date
-    task.due_time = updated_task.due_time
-    task.completed = updated_task.completed
+    update_data = task.model_dump(exclude_unset=True)
+
+    for field, value in update_data.items():
+        setattr(db_task, field, value)
 
     db.commit()
-    db.refresh(task)
+    db.refresh(db_task)
 
-    return task
+    return db_task
 
 def delete_task(db: Session, task_id: int):
     task = get_task(db, task_id)
