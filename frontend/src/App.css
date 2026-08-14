@@ -26,84 +26,317 @@
   color: var(--nova-text);
 }
 
-/* SIDEBAR */
+/* =========================================
+   NOVA V2 // SHELL
+========================================= */
+
+.nova-shell {
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 72% 18%,
+      rgba(255, 70, 0, 0.09),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 20% 90%,
+      rgba(255, 42, 0, 0.035),
+      transparent 30%
+    ),
+    #050505;
+
+  color: var(--nova-text);
+}
+
+/* subtle HUD grid */
+
+.nova-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+  z-index: 0;
+
+  opacity: 0.18;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 42px 42px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 85%
+  );
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
 
 .nova-sidebar {
-  width: 82px;
-  min-height: 100vh;
+  position: fixed;
+  inset: 0 auto 0 0;
+
+  width: 92px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  padding: 24px 0;
+  padding: 24px 12px;
 
-  background: #080808;
-  border-right: 1px solid var(--nova-border);
+  background: rgba(7, 7, 7, 0.88);
+
+  border-right: 1px solid rgba(255, 70, 20, 0.14);
+
+  backdrop-filter: blur(18px);
+
+  z-index: 20;
 }
 
-.nova-logo {
+/* =========================================
+   BRAND
+========================================= */
+
+.nova-brand {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.nova-brand-mark {
   width: 44px;
   height: 44px;
 
   display: grid;
   place-items: center;
 
-  border: 1px solid var(--nova-red);
-  border-radius: 10px;
+  color: #fff;
 
-  color: white;
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 950;
+
+  border: 1px solid var(--nova-red);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 106, 0, 0.22),
+      rgba(255, 42, 0, 0.04)
+    );
 
   box-shadow:
-    0 0 20px rgba(255, 42, 0, 0.25),
-    inset 0 0 12px rgba(255, 42, 0, 0.08);
+    0 0 24px rgba(255, 42, 0, 0.2),
+    inset 0 0 18px rgba(255, 42, 0, 0.08);
+
+  clip-path: polygon(
+    0 7px,
+    7px 0,
+    100% 0,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    0 100%
+  );
 }
 
+.nova-brand-line {
+  width: 28px;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--nova-red),
+    transparent
+  );
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
 .nova-nav {
+  width: 100%;
+
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  align-items: center;
 
-  margin-top: 70px;
+  gap: 8px;
+
+  margin-top: 56px;
 }
 
 .nav-item {
-  width: 42px;
-  height: 42px;
+  position: relative;
+
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
 
   border: 1px solid transparent;
-  border-radius: 8px;
 
   background: transparent;
-  color: #666;
+
+  color: #555;
 
   cursor: pointer;
 
   transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
-.nav-item:hover,
-.nav-item.active {
-  color: white;
-  border-color: rgba(255, 42, 0, 0.4);
+.nav-item::before {
+  content: "";
 
-  background: rgba(255, 42, 0, 0.08);
+  position: absolute;
+  left: -13px;
+  top: 50%;
+
+  width: 2px;
+  height: 0;
+
+  transform: translateY(-50%);
+
+  background: var(--nova-red);
+
+  box-shadow: 0 0 14px var(--nova-red);
+
+  transition: height 180ms ease;
+}
+
+.nav-item:hover {
+  color: #ddd;
+
+  background: rgba(255, 42, 0, 0.035);
+
+  border-color: rgba(255, 70, 20, 0.12);
+}
+
+.nav-item.active {
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 42, 0, 0.14),
+      rgba(255, 42, 0, 0.025)
+    );
+
+  border-color: rgba(255, 42, 0, 0.25);
 
   box-shadow:
-    0 0 18px rgba(255, 42, 0, 0.15);
+    inset 0 0 20px rgba(255, 42, 0, 0.035);
 }
 
-/* MAIN */
+.nav-item.active::before {
+  height: 28px;
+}
+
+.nav-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.nav-label {
+  font-size: 6px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+/* =========================================
+   SIDEBAR BOTTOM
+========================================= */
+
+.nova-sidebar-bottom {
+  width: 100%;
+
+  margin-top: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 18px;
+}
+
+.nova-system-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #555;
+
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+
+.nova-system-indicator span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--nova-orange);
+
+  box-shadow:
+    0 0 8px var(--nova-orange);
+
+  animation: systemPulse 2s ease-in-out infinite;
+}
+
+@keyframes systemPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* =========================================
+   MAIN
+========================================= */
 
 .nova-main {
-  flex: 1;
+  position: relative;
+
+  width: 100%;
   min-width: 0;
+
+  margin-left: 92px;
+
+  z-index: 1;
 }
 
 .nova-header {
@@ -431,110 +664,136 @@
     0 0 25px rgba(255, 42, 0, 0.25);
 }
 
-/* =========================
-   TASK LIST
-========================= */
+/* =========================================
+   NOVA V2 // MISSION CARDS
+========================================= */
 
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
-  max-width: 1000px;
+  gap: 10px;
 }
 
-/* =========================
-   TASK CARD
-========================= */
+/* =========================================
+   MISSION CARD
+========================================= */
 
 .task-card {
   position: relative;
 
-  display: flex;
-  align-items: center;
+  min-height: 150px;
 
-  min-height: 110px;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: stretch;
 
-  padding: 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   background:
     linear-gradient(
-      110deg,
-      rgba(255, 42, 0, 0.055),
-      transparent 45%
-    ),
-    var(--nova-surface);
+      105deg,
+      rgba(255, 42, 0, 0.035),
+      rgba(255, 255, 255, 0.012) 45%,
+      transparent
+    );
 
-  border: 1px solid rgba(255, 255, 255, 0.07);
-
-  border-left: 3px solid var(--nova-red);
+  overflow: hidden;
 
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+/* Technical left edge */
+
+.task-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 2px;
+
+  background: var(--nova-orange);
+
+  box-shadow:
+    0 0 14px rgba(255, 106, 0, 0.18);
+}
+
+/* Small HUD corner */
+
+.task-card::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  top: 0;
+
+  width: 26px;
+  height: 26px;
+
+  border-top: 1px solid rgba(255, 70, 20, 0.35);
+  border-right: 1px solid rgba(255, 70, 20, 0.35);
+
+  opacity: 0.7;
 }
 
 .task-card:hover {
-  transform: translateX(6px);
-
-  border-color: rgba(255, 70, 0, 0.35);
+  border-color: rgba(255, 70, 20, 0.3);
 
   background:
     linear-gradient(
-      110deg,
-      rgba(255, 42, 0, 0.1),
-      transparent 50%
-    ),
-    var(--nova-surface-2);
+      105deg,
+      rgba(255, 42, 0, 0.075),
+      rgba(255, 255, 255, 0.018) 45%,
+      transparent
+    );
 
   box-shadow:
-    -10px 0 35px rgba(255, 42, 0, 0.08);
+    0 0 30px rgba(255, 42, 0, 0.05);
+
+  transform: translateX(3px);
 }
 
-/* =========================
-   CHECK
-========================= */
+/* =========================================
+   MISSION NUMBER
+========================================= */
 
-.task-check {
-  width: 30px;
-  height: 30px;
+.task-index {
+  padding: 22px 14px;
 
-  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 
-  display: grid;
-  place-items: center;
+  color: #444;
 
-  margin-right: 22px;
+  font-size: 13px;
+  font-weight: 900;
 
-  border: 1px solid rgba(255, 70, 0, 0.45);
+  letter-spacing: 1px;
 
-  color: white;
-
-  font-size: 15px;
-
-  transition:
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.task-card:hover .task-check {
-  background: rgba(255, 42, 0, 0.15);
-
-  box-shadow:
-    0 0 15px rgba(255, 42, 0, 0.2);
+.task-card:hover .task-index {
+  color: var(--nova-orange);
 }
 
-
-
-/* =========================
-   TASK INFO
-========================= */
+/* =========================================
+   INFORMATION
+========================================= */
 
 .task-info {
-  flex: 1;
   min-width: 0;
+
+  padding: 22px 26px;
 }
 
 .task-topline {
@@ -542,91 +801,274 @@
   align-items: center;
   gap: 12px;
 
-  margin-bottom: 7px;
+  margin-bottom: 10px;
 }
 
 .task-category {
   color: #666;
 
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 8px;
+  font-weight: 900;
 
   letter-spacing: 2px;
 }
 
 .priority {
-  padding: 3px 7px;
+  padding: 4px 7px;
 
-  font-size: 8px;
-  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
-  letter-spacing: 1px;
+  font-size: 7px;
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
 }
 
 .priority.high {
   color: var(--nova-red);
 
-  background: rgba(255, 42, 0, 0.1);
+  border-color: rgba(255, 42, 0, 0.3);
 
-  border: 1px solid rgba(255, 42, 0, 0.25);
+  background: rgba(255, 42, 0, 0.06);
 }
 
 .priority.medium {
   color: var(--nova-ember);
 
-  background: rgba(255, 176, 0, 0.08);
+  border-color: rgba(255, 176, 0, 0.25);
 
-  border: 1px solid rgba(255, 176, 0, 0.2);
+  background: rgba(255, 176, 0, 0.05);
 }
 
 .priority.low {
-  color: #999;
+  color: #777;
 
-  background: rgba(255, 255, 255, 0.04);
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.08);
 }
+
+/* =========================================
+   TITLE
+========================================= */
 
 .task-info h3 {
   margin: 0;
 
-  font-size: 19px;
+  color: #f4f4f4;
 
-  font-weight: 800;
+  font-size: clamp(18px, 2vw, 25px);
+  font-weight: 900;
 
-  letter-spacing: 0.3px;
+  line-height: 1.1;
+
+  letter-spacing: -0.4px;
 }
 
 .task-info p {
-  margin: 5px 0 0;
+  max-width: 720px;
+
+  margin: 8px 0 0;
 
   color: #666;
 
   font-size: 12px;
+
+  line-height: 1.5;
 }
 
-/* =========================
-   ARROW
-========================= */
+/* =========================================
+   META
+========================================= */
 
-.task-arrow {
-  margin-left: 30px;
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin-top: 20px;
 
   color: #444;
 
-  font-size: 20px;
+  font-size: 7px;
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+.task-meta span {
+  position: relative;
+}
+
+.task-meta span + span::before {
+  content: "";
+
+  position: absolute;
+
+  left: -10px;
+  top: 50%;
+
+  width: 2px;
+  height: 2px;
+
+  background: #444;
+}
+
+.task-status {
+  color: var(--nova-orange);
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.task-actions {
+  min-width: 120px;
+
+  padding: 22px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+}
+
+/* =========================================
+   CHECK
+========================================= */
+
+.task-check {
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 auto;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: transparent;
+
+  color: var(--nova-orange);
+
+  font-size: 15px;
+  font-weight: 900;
+
+  cursor: pointer;
 
   transition:
-    transform 0.2s ease,
-    color 0.2s ease;
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.task-check:hover {
+  border-color: var(--nova-orange);
+
+  background: rgba(255, 106, 0, 0.08);
+
+  box-shadow:
+    0 0 16px rgba(255, 106, 0, 0.12);
+}
+
+.task-check.checked {
+  border-color: var(--nova-orange);
+
+  background: rgba(255, 106, 0, 0.12);
+
+  box-shadow:
+    inset 0 0 14px rgba(255, 106, 0, 0.08),
+    0 0 14px rgba(255, 106, 0, 0.08);
+}
+
+/* =========================================
+   DELETE
+========================================= */
+
+.task-delete {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid transparent;
+
+  background: transparent;
+
+  color: #444;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.task-delete:hover {
+  color: var(--nova-red);
+
+  border-color: rgba(255, 42, 0, 0.35);
+
+  background: rgba(255, 42, 0, 0.08);
+}
+
+/* =========================================
+   ARROW
+========================================= */
+
+.task-arrow {
+  width: 30px;
+
+  display: grid;
+  place-items: center;
+
+  color: #333;
+
+  font-size: 18px;
+
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .task-card:hover .task-arrow {
   color: var(--nova-orange);
 
-  transform: translateX(5px);
+  transform: translateX(4px);
 }
 
+/* =========================================
+   COMPLETED
+========================================= */
+
+.task-card.completed {
+  opacity: 0.48;
+}
+
+.task-card.completed::before {
+  background: #555;
+
+  box-shadow: none;
+}
+
+.task-card.completed .task-info h3 {
+  color: #777;
+
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 106, 0, 0.5);
+}
+
+.task-card.completed .task-status {
+  color: #666;
+}
+
+.task-card.completed:hover {
+  opacity: 0.7;
+}
 /* =========================
    COMPLETED
 ========================= */
@@ -1007,4 +1449,1012 @@
 .pagination-btn:disabled {
   opacity: 0.25;
   cursor: not-allowed;
+}
+
+.task-delete {
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+
+  background: transparent;
+  color: #555;
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.task-delete:hover {
+  color: var(--nova-red);
+
+  border-color: rgba(255, 42, 0, 0.6);
+
+  background: rgba(255, 42, 0, 0.1);
+
+  box-shadow:
+    0 0 18px rgba(255, 42, 0, 0.12);
+}
+
+/* =========================================
+   NOVA V2 // DASHBOARD COMPOSITION
+========================================= */
+
+.dashboard {
+  width: min(1500px, calc(100% - 80px));
+  margin: 0 auto;
+  padding: 42px 0 100px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.nova-header {
+  min-height: 116px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 48px;
+
+  border-bottom: 1px solid rgba(255, 70, 20, 0.14);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 42, 0, 0.025),
+      transparent 45%
+    );
+}
+
+.header-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nova-status {
+  color: var(--nova-red);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 4px;
+}
+
+.nova-header h1 {
+  margin: 0;
+
+  color: #f4f4f4;
+
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 950;
+
+  letter-spacing: -1.5px;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.system-online {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--nova-orange);
+}
+
+.system-online i {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--nova-orange);
+
+  box-shadow: 0 0 12px var(--nova-orange);
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.dashboard-hero {
+  min-height: 440px;
+
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+
+  border: 1px solid rgba(255, 70, 20, 0.12);
+
+  background:
+    radial-gradient(
+      circle at 32% 50%,
+      rgba(255, 60, 0, 0.07),
+      transparent 35%
+    ),
+    rgba(10, 10, 10, 0.7);
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.dashboard-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 49.9%,
+      rgba(255, 70, 20, 0.1) 50%,
+      transparent 50.1%
+    );
+
+  opacity: 0.5;
+}
+
+/* =========================================
+   CORE MODULE
+========================================= */
+
+.core-module {
+  position: relative;
+
+  min-height: 440px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-right: 1px solid rgba(255, 70, 20, 0.1);
+}
+
+.module-label {
+  position: absolute;
+
+  top: 26px;
+  left: 28px;
+  right: 28px;
+
+  display: flex;
+  justify-content: space-between;
+
+  color: #555;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.module-label span:first-child {
+  color: var(--nova-orange);
+}
+
+/* =========================================
+   CORE TELEMETRY
+========================================= */
+
+.core-telemetry {
+  position: absolute;
+
+  bottom: 26px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.core-telemetry span {
+  color: #555;
+
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+.core-telemetry strong {
+  color: #aaa;
+
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+/* =========================================
+   STATUS MODULE
+========================================= */
+
+.command-status {
+  padding: 36px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 24px;
+}
+
+.status-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.telemetry-code {
+  color: #444;
+
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+/* =========================================
+   STATS
+========================================= */
+
+.mission-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 10px;
+}
+
+.mission-stat {
+  min-height: 120px;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  background: rgba(255, 255, 255, 0.018);
+
+  position: relative;
+}
+
+.mission-stat::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 2px;
+
+  background: var(--nova-orange);
+
+  opacity: 0.7;
+}
+
+.mission-stat span {
+  color: #666;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.mission-stat strong {
+  color: #f5f5f5;
+
+  font-size: 42px;
+  font-weight: 900;
+
+  line-height: 1;
+}
+
+.mission-stat small {
+  color: #444;
+
+  font-size: 7px;
+  letter-spacing: 1.5px;
+}
+
+.mission-stat.stat-danger::before {
+  background: var(--nova-red);
+
+  box-shadow: 0 0 14px rgba(255, 42, 0, 0.3);
+}
+
+.mission-stat.stat-danger strong {
+  color: var(--nova-red);
+}
+
+/* =========================================
+   SYSTEM READOUT
+========================================= */
+
+.system-readout {
+  padding: 18px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.system-readout > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.system-readout span {
+  color: #555;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.system-readout strong {
+  color: var(--nova-orange);
+
+  font-size: 12px;
+}
+
+.load-bar {
+  height: 2px;
+
+  margin: 14px 0;
+
+  background: #1b1b1b;
+
+  overflow: hidden;
+}
+
+.load-bar span {
+  display: block;
+
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--nova-red),
+      var(--nova-orange)
+    );
+
+  box-shadow: 0 0 10px var(--nova-orange);
+}
+
+.system-readout-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.system-readout-footer span:last-child {
+  color: var(--nova-orange);
+}
+
+/* =========================================
+   MISSIONS
+========================================= */
+
+.missions-section {
+  margin-top: 70px;
+}
+
+.missions-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+}
+
+.missions-heading h2 {
+  margin: 10px 0 0;
+
+  color: #f4f4f4;
+
+  font-size: clamp(38px, 5vw, 68px);
+  font-weight: 950;
+
+  line-height: 0.95;
+  letter-spacing: -3px;
+}
+
+.missions-heading h2 span {
+  color: var(--nova-red);
+
+  text-shadow:
+    0 0 24px rgba(255, 42, 0, 0.2);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+  .nova-header {
+    padding: 0 24px;
+  }
+
+  .dashboard {
+    width: calc(100% - 40px);
+  }
+
+  .dashboard-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .core-module {
+    min-height: 360px;
+
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 70, 20, 0.1);
+  }
+}
+
+@media (max-width: 600px) {
+  .nova-sidebar {
+    width: 68px;
+  }
+
+  .nova-main {
+    margin-left: 68px;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-item {
+    width: 48px;
+    height: 48px;
+  }
+
+  .nova-header {
+    min-height: 90px;
+
+    padding: 0 18px;
+  }
+
+  .header-status {
+    display: none;
+  }
+
+  .dashboard {
+    width: calc(100% - 24px);
+
+    padding-top: 24px;
+  }
+
+  .command-status {
+    padding: 22px;
+  }
+
+  .mission-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .missions-heading {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 24px;
+  }
+
+  .missions-heading h2 {
+    font-size: 40px;
+    letter-spacing: -2px;
+  }
+}
+
+/* =========================================
+   NOVA V2 // DENSITY PASS
+========================================= */
+
+/* Give the dashboard more usable vertical space */
+.dashboard {
+  padding-top: 30px;
+  padding-bottom: 70px;
+}
+
+/* Make the command area tighter */
+.dashboard-hero {
+  min-height: 365px;
+}
+
+/* Compress the Core side */
+.core-module {
+  min-height: 365px;
+}
+
+/* Keep telemetry dense and intentional */
+.command-status {
+  padding: 30px;
+  gap: 18px;
+}
+
+.mission-stat {
+  min-height: 105px;
+  padding: 17px 20px;
+}
+
+.mission-stat strong {
+  font-size: 38px;
+}
+
+/* Bring missions much closer to the hero */
+.missions-section {
+  margin-top: 42px;
+}
+
+/* Slightly reduce the giant headline */
+.missions-heading h2 {
+  font-size: clamp(38px, 4.2vw, 58px);
+  letter-spacing: -2.5px;
+}
+
+/* Give the mission list more room */
+.missions-heading {
+  margin-bottom: 22px;
+}
+
+
+/* =========================================
+   NOVA V2 // CREATE MISSION PANEL
+========================================= */
+
+.task-panel-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 100;
+
+  display: flex;
+  justify-content: flex-end;
+
+  background: rgba(0, 0, 0, 0.72);
+
+  backdrop-filter: blur(8px);
+
+  animation: nova-overlay-in 180ms ease-out;
+}
+
+/* =========================================
+   PANEL
+========================================= */
+
+.task-panel {
+  position: relative;
+
+  width: min(560px, 92vw);
+  height: 100%;
+
+  overflow-y: auto;
+
+  padding: 42px;
+
+  background:
+    radial-gradient(
+      circle at 80% 5%,
+      rgba(255, 60, 0, 0.08),
+      transparent 30%
+    ),
+    #080808;
+
+  border-left: 1px solid rgba(255, 70, 20, 0.3);
+
+  box-shadow:
+    -20px 0 80px rgba(255, 42, 0, 0.08);
+
+  animation: nova-panel-in 220ms ease-out;
+}
+
+/* subtle technical grid */
+
+.task-panel::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.15;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 30px 30px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 80%
+  );
+}
+
+/* =========================================
+   CLOSE
+========================================= */
+
+.panel-close {
+  position: absolute;
+
+  top: 24px;
+  right: 24px;
+
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: transparent;
+
+  color: #666;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.panel-close:hover {
+  color: #fff;
+
+  border-color: var(--nova-red);
+
+  background: rgba(255, 42, 0, 0.1);
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.create-task-form {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+.form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding-right: 48px;
+
+  padding-bottom: 28px;
+
+  border-bottom: 1px solid rgba(255, 70, 20, 0.16);
+}
+
+.form-header h2 {
+  margin: 10px 0 0;
+
+  color: #f5f5f5;
+
+  font-size: 36px;
+  font-weight: 950;
+
+  line-height: 0.95;
+
+  letter-spacing: -1.5px;
+}
+
+.form-header h2 span {
+  color: var(--nova-red);
+
+  text-shadow:
+    0 0 20px rgba(255, 42, 0, 0.2);
+}
+
+.form-code {
+  color: #444;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+/* =========================================
+   FIELD
+========================================= */
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+.form-section label {
+  color: #666;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.form-section input,
+.form-section textarea,
+.form-section select {
+  width: 100%;
+
+  padding: 14px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 0;
+
+  outline: none;
+
+  background:
+    linear-gradient(
+      100deg,
+      rgba(255, 42, 0, 0.025),
+      rgba(255, 255, 255, 0.015)
+    );
+
+  color: #eee;
+
+  font-size: 13px;
+
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.form-section textarea {
+  resize: vertical;
+
+  min-height: 110px;
+
+  line-height: 1.5;
+}
+
+.form-section input::placeholder,
+.form-section textarea::placeholder {
+  color: #444;
+}
+
+.form-section input:focus,
+.form-section textarea:focus,
+.form-section select:focus {
+  border-color: rgba(255, 70, 20, 0.65);
+
+  background:
+    rgba(255, 42, 0, 0.035);
+
+  box-shadow:
+    0 0 0 1px rgba(255, 42, 0, 0.08),
+    0 0 24px rgba(255, 42, 0, 0.05);
+}
+
+.form-section select {
+  appearance: none;
+
+  cursor: pointer;
+}
+
+/* =========================================
+   FIELD GRID
+========================================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px;
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.form-error {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 13px;
+
+  border: 1px solid rgba(255, 42, 0, 0.35);
+
+  background: rgba(255, 42, 0, 0.06);
+
+  color: #aaa;
+}
+
+.form-error > span {
+  width: 20px;
+  height: 20px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  color: var(--nova-red);
+
+  border: 1px solid var(--nova-red);
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.form-error strong {
+  color: var(--nova-red);
+
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+.form-error p {
+  margin: 5px 0 0;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.form-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #555;
+
+  font-size: 7px;
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+.form-status i {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--nova-orange);
+
+  box-shadow: 0 0 9px var(--nova-orange);
+}
+
+.form-footer .primary-btn {
+  min-width: 190px;
+
+  padding: 14px 20px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .task-panel {
+    width: 100%;
+
+    padding: 28px 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .form-footer .primary-btn {
+    width: 100%;
+  }
+}
+
+
+@keyframes nova-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes nova-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+.form-status i.processing {
+  animation: nova-pulse 700ms ease-in-out infinite alternate;
+}
+
+@keyframes nova-pulse {
+  from {
+    opacity: 0.3;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.3);
+  }
 }

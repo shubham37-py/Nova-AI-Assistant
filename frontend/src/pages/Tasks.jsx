@@ -8,12 +8,11 @@ function Tasks() {
 
   const limit = 20;
 
-  const {
-  tasks,
-  loading,
-  error,
-  toggleTask,
-} = useTasks(page, limit, completed);
+  const { tasks, loading, error, toggleTask, removeTask } = useTasks(
+    page,
+    limit,
+    completed,
+  );
 
   function changeFilter(value) {
     setCompleted(value);
@@ -44,32 +43,24 @@ function Tasks() {
           SYSTEM <span>ERROR.</span>
         </h2>
 
-        <p className="page-description">
-          {error}
-        </p>
+        <p className="page-description">{error}</p>
       </section>
     );
   }
 
   return (
     <section className="page-section">
-
       <div className="page-heading">
-        <p className="eyebrow">
-          NOVA // TASK SYSTEM
-        </p>
+        <p className="eyebrow">NOVA // TASK SYSTEM</p>
 
         <h2>
           ALL <span>TASKS.</span>
         </h2>
 
-        <p className="page-description">
-          Your complete mission queue.
-        </p>
+        <p className="page-description">Your complete mission queue.</p>
       </div>
 
       <div className="task-filters">
-
         <button
           className={completed === null ? "filter active" : "filter"}
           onClick={() => changeFilter(null)}
@@ -90,7 +81,6 @@ function Tasks() {
         >
           COMPLETED
         </button>
-
       </div>
 
       {tasks.length === 0 ? (
@@ -98,14 +88,10 @@ function Tasks() {
           <p>NO MISSIONS FOUND.</p>
         </div>
       ) : (
-        <TaskList
-  tasks={tasks}
-  onToggle={toggleTask}
-/>
+        <TaskList tasks={tasks} onToggle={toggleTask} onDelete={removeTask} />
       )}
 
       <div className="pagination">
-
         <button
           className="pagination-btn"
           disabled={!hasPreviousPage}
@@ -114,9 +100,7 @@ function Tasks() {
           ← PREVIOUS
         </button>
 
-        <span>
-          PAGE {page}
-        </span>
+        <span>PAGE {page}</span>
 
         <button
           className="pagination-btn"
@@ -125,9 +109,7 @@ function Tasks() {
         >
           NEXT →
         </button>
-
       </div>
-
     </section>
   );
 }

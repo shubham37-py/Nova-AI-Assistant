@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTasks, createTask, updateTask } from "../services/api";
+import { getTasks, createTask, updateTask, deleteTask } from "../services/api";
 
 function useTasks(page = 1, limit = 20, completed = null) {
   const [tasks, setTasks] = useState([]);
@@ -35,37 +35,49 @@ function useTasks(page = 1, limit = 20, completed = null) {
   }
 
   async function toggleTask(task) {
-  try {
-    const updatedTask = await updateTask(task.id, {
-      completed: !task.completed,
-    });
+    try {
+      const updatedTask = await updateTask(task.id, {
+        completed: !task.completed,
+      });
 
-    setTasks((currentTasks) =>
-      currentTasks.map((currentTask) =>
-        currentTask.id === updatedTask.id
-          ? updatedTask
-          : currentTask
-      )
-    );
+      setTasks((currentTasks) =>
+        currentTasks.map((currentTask) =>
+          currentTask.id === updatedTask.id ? updatedTask : currentTask,
+        ),
+      );
 
-    return updatedTask;
-  } catch (err) {
-    setError(err.message);
-    throw err;
+      return updatedTask;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
   }
-}
+
+  async function removeTask(taskId) {
+    try {
+      await deleteTask(taskId);
+
+      setTasks((currentTasks) =>
+        currentTasks.filter((task) => task.id !== taskId),
+      );
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  }
 
   useEffect(() => {
     loadTasks();
   }, [page, limit, completed]);
 
   return {
-  tasks,
-  loading,
-  error,
-  addTask,
-  toggleTask,
-};
+    tasks,
+    loading,
+    error,
+    addTask,
+    toggleTask,
+    removeTask,
+  };
 }
 
 export default useTasks;
